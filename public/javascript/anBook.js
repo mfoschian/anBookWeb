@@ -30,7 +30,7 @@ anBook.prototype.decode = function(filecontent) {
             this.answers.push( line );
         }
         else {
-            var token = m[1].lowerCase();
+            var token = m[1].toLowerCase();
             var text = m[2];
             if( prex.indexOf(token) >= 0 ) {
                 this[token] = text;
@@ -41,6 +41,16 @@ anBook.prototype.decode = function(filecontent) {
 
 anBook.prototype.isEmpty = function() {
     return this.answers.length == 0;
+};
+
+anBook.prototype.answer = function() {
+    if( this.isEmpty() )
+        return null;
+
+    var max = this.answers.length;
+    var ix = Math.floor( Math.random() * (max - 1));
+
+    return this.answers[ ix ];
 };
 
 AnBook = anBook;
