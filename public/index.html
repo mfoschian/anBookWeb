@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Massive Web Cerpa Request(by PCR@fvg)</title>
+
+		<link href="style/bootstrap.min.css" rel="stylesheet" />
+		<link href="style/bootstrap-datepicker.min.css" rel="stylesheet" />
+		<!-- <link href="style/bootstrap-combobox.css" rel="stylesheet" /> -->
+
+		<style>
+			ul.xnav {
+				margin-top: 5px;
+			}
+			#radioBtn .notActive {
+				color: #3276b1;
+				background-color: #fff;
+			}
+			div.lista {
+				border: 1px solid blue;
+				border-radius: 10px;
+			}
+			div.footer hr {
+				margin-top: 0;
+			}
+			div.footer {
+				padding: 10px;
+			}
+			#pTable {
+				margin-bottom: 0px;
+			}
+			#pTable thead tr td {
+				font-weight: bold;
+			}
+			div.generate {
+				display: none;
+				border: 1px dotted blue;
+				border-radius: 10px;
+				margin-top: 1em;
+				padding: 10px;
+			}
+			div.generate label {
+				margin-top: 0.5em;
+			}
+			.error {
+				border: 1px solid red;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainnavbar" aria-expanded="false" aria-controls="mainnavbar">
+						<span class="sr-only">Menu</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Massive web Cerpa</a>
+				</div>
+				<div id="mainnavbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li class="nav-item">
+							<button type="button" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#loadFile">
+								<span class="glyphicon glyphicon-upload"></span> Carica File</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+
+			<div class="row lista">
+				<div class="container-fluid">
+				<table class="table" id="pTable">
+					<thead class="thead-light">
+						<tr>
+							<td></td>
+							<td>Cognome</td>
+							<td>Nome</td>
+							<td>Comune</td>
+							<td>Data</td>
+							<td>Stato</td>
+							<td>M/F</td>
+							<td>Cod Fiscale</td>
+						</tr>
+					</thead>
+					<tbody id="personList">
+					</tbody>
+				</table>
+				<div class="footer">
+					<hr>
+					<p>Nominativi inseriti: <b id="personCount" class="badge badge-light" >0</b></p>
+					<button class="btn btn-primary" id="addPerson">Aggiungi</button>
+				</div>
+				</div>
+			</div>
+
+			<div class="row generate" id="generateDiv" >
+				<div class="container-fluid">
+					<label for="pRequester">Richiedente:</label>
+					<input type="text" class="form-control text-uppercase" id="pRequester" 
+						value="REGIONE AUTONOMA FVG - PROTEZIONE CIVILE">
+					</input>
+					<label for="pSite">Sede:</label>
+					<input type="text" class="form-control text-uppercase" id="pSite" 
+						value="PALMANOVA">
+					</input>
+
+					<label for="pProcura">Alla Procura di:</label>
+					<input type="text" class="form-control text-uppercase" id="pProcura" 
+						value="UDINE">
+					</input>
+
+					<label for="pCertificato">Certificato Richiesto:</label>
+					<select class="form-control " id="pCertificato">
+						<option value="0">CERTIFICATO GENERALE (artt. 24, 28 d.P.R. n. 313/2002)</option>
+						<option value="1">CERTIFICATO PENALE (artt. 25, 28 d.P.R. n. 313/2002)</option>
+						<option value="2">CERTIFICATO CIVILE (artt. 26,28 d.P.R. n. 313/2002)</option>
+						<option value="3" selected>CERTIFICATO art. 39 d.P.R. n. 313/2002 (Consultazione diretta del sistema)</option>
+						<option value="4">CERTIFICATO art. 29 d.P.R. n. 313/2002: Elettorale</option>
+					</select>
+
+					<label for="pMotivo">Motivo e finalit&agrave;:</label>
+					<select class="form-control" id="pMotivo">
+						<option value="0" selected>Controllo sulla dichiarazione sostitutiva ai sensi dell'art. 71 d.P.R. n. 445/2000</option>
+						<option value="1">Accertamento d'ufficio di stati, qualit&agrave; e fatti (art. 43, 46 d.P.R. n. 445/2000)</option>
+					</select>
+
+					<label for="pReason">Procedimento Amministrativo:</label>
+					<input type="text" class="form-control text-uppercase" id="pReason"
+						value="GARA DI APPALTO SERVIZI E FORNITURE">
+					</input>
+
+
+					<label for="pConsegna">Modalit&agrave; di consegna:</label>
+					<select class="form-control" id="pConsegna">
+						<option value="0">CARTACEA</option>
+						<option value="1">SU SUPPORTO MAGNETICO</option>
+						<option value="2" selected>POSTA ELETTRONICA CERTIFICATA</option>
+					</select>
+
+					<label for="pFirma">Firma:</label>
+					<textarea class="form-control" id="pFirma" rows="4">IL DIRETTORE CENTRALE
+DELLA PROTEZIONE CIVILE
+Dott.for. Sulli Luciano
+(firmato digitalmente)</textarea>
+
+					<hr>					
+					<button class="btn btn-primary" id="generate">Genera Files</button>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Dialogs -->	
+		<div class="modal" tabindex="-1" role="dialog" id="loadFile">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Carica File</h4>
+					</div>
+					<div class="modal-body">
+						<input type="file" id="fileInput"></input>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal" tabindex="-1" role="dialog" id="personEdit">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Inserisci/modifica Persona</h4>
+					</div>
+					<div class="modal-body">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-6">
+									<label for="pCognome">Cognome</label>
+									<input type="text" class="form-control text-uppercase" id="pCognome" placeholder="Cognome"></input>
+								</div>
+								<div class="col-md-6">
+									<label for="pNome">Nome</label>
+									<input type="text" class="form-control text-uppercase" id="pNome" placeholder="Nome"></input>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label for="pComune">Comune</label>
+									<input type="text" class="form-control text-uppercase" id="pComune" placeholder="Comune ..." autocomplete="false" data-provide="typeahead"></input>
+								</div>
+								<div class="col-md-6">
+									<label for="pStato">Stato</label>
+									<input type="text" class="form-control text-uppercase" id="pStato" placeholder="Stato"  autocomplete="false" data-provide="typeahead" ></input>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label for="pDataNascita">Data di Nascita</label>
+									<div class="input-group col-md-12 date"
+											data-date-format="dd/mm/yyyy"
+											data-date-language="it" >
+										<input type="text" class="form-control" id="pDataNascita" placeholder="Data di Nascita"></input>
+										<div class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></div>
+									</div>
+								</div>
+								<div class="col-md-2">
+								</div>
+								<div class="col-md-4">
+									<label for="pSesso" class="control-label text-right">Sesso</label>
+									<div class="input-group">
+										<div id="radioBtn" class="btn-group">
+											<a class="btn btn-primary btn-sm active" data-toggle="pSesso" data-title="M">MASCHIO</a>
+											<a class="btn btn-primary btn-sm notActive" data-toggle="pSesso" data-title="F">FEMMINA</a>
+										</div>
+										<input type="hidden" name="pSesso" id="pSesso">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8">
+									<label for="pCodice">Codice Fiscale</label>
+									<!-- <input type="text" class="form-control text-uppercase" id="pCodice" max-length="16"> -->
+									<div class="input-group">
+										<div class="input-group-addon" id="butCalcCF"><span class="glyphicon glyphicon-cog"></span></div>
+										<input type="text" class="form-control text-uppercase" id="pCodice" max-length="16">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="butSave">Salva</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- JavaScript Includes -->
+		<script src="javascript/jquery.min.js"></script>
+		<script src="javascript/bootstrap.min.js"></script>
+		<script src="javascript/bootstrap-datepicker.min.js"></script>
+		<script src="javascript/locales/bootstrap-datepicker.it.min.js"></script>
+		<script src="javascript/bootstrap3-typeahead.js"></script>
+		<script src="javascript/FileSaver.min.js"></script>
+		<script src="javascript/pdfkit.js"></script>
+		<script src="javascript/blob-stream.js"></script>
+		<!-- <script src="javascript/bootbox.min.js"></script> -->
+		
+		
+		<!-- Our main JS file -->
+		<script src="javascript/pdfBuilder.js"></script>
+		<script src="javascript/application.js"></script>
+		<script src="javascript/codicefiscale.js"></script>
+
+	</body>
+</html>

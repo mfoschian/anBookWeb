@@ -1,0 +1,13 @@
+{
+  "name": "anBook.web",
+  "description": "Answer Book Web edition",
+  "version": "0.1.0",
+  "dependencies": {
+    "minihttp": ">=0.0.9"
+  },
+  "author": {
+    "name": "mfx"
+  },
+  "license": "BSD",
+  "readmeFilename": "README.md"
+}
