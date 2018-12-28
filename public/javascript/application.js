@@ -70,7 +70,7 @@ function getAnAnswer() {
 }
 
 var Paths = {
-    base_book_dir: function( book_name ) { return '/books/' + book_name; },
+    base_book_dir: function( book_name ) { return 'books/' + book_name; },
     book: function( book_name ) { return Paths.base_book_dir( book_name ) + '/book.txt'; },
     icon: function( book_name, icon ) { return Paths.base_book_dir( book_name ) + '/images/' + icon; }
 };
