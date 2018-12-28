@@ -39,10 +39,34 @@
 
 		<div class="container-fluid">
 
-			<div class="row lista">
-				<div id="bookHeader">
+			<style>
+				#bookTitle {
+					font-weight: bold;
+					font-size: 2em;		
+				}
+				#bookIcon {
+					max-width: 300px;
+					max-height: 600px;
+				}
+				#theAnswer {
+					margin-left: 2em;
+					text-align: center;
+					font-weight: bold;
+					font-size: 3em;		
+				}
+				.lista {
+					vertical-align: middle;
+					min-height: 200px;
+				}
+				.click_zone {
+					cursor: pointer;
+				}
+			</style>
+			<div class="row lista click_zone">
+				<div class="col-md-12 ">
+					<img src="#" id="bookIcon" ></img>
+					<span id="theAnswer" >Click for an answer</span>
 				</div>
-				<div id="theAnswer">Click for an answer</div>
 			</div>
 
 		</div>

@@ -1,6 +1,6 @@
 [title]Il libro delle risposte di Namor
 [id]it.fvg.protciv.Namor
-[icon]/namor/re_namor.jpg
+[icon]re_namor.jpg
 Chi parla? Un po' tu e un po' io!
 Il tono fa la musica
 Chi semina vento raccoglie tempesta

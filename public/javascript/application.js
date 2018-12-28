@@ -51,6 +51,13 @@ var GUI = {
     },
     setTitle: function( text ) {
         $('#bookTitle').text( text );
+    },
+    setBookIcon: function( image ) {
+        $('#bookIcon').attr('src', image );
+        $('#bookIcon').show();
+    },
+    hideBookIcon: function() {
+        $('#bookIcon').hide();
     }
 };
 
@@ -62,6 +69,11 @@ function getAnAnswer() {
     GUI.setAnswer( answer );
 }
 
+var Paths = {
+    base_book_dir: function( book_name ) { return '/books/' + book_name; },
+    book: function( book_name ) { return Paths.base_book_dir( book_name ) + '/book.txt'; },
+    icon: function( book_name, icon ) { return Paths.base_book_dir( book_name ) + '/images/' + icon; }
+};
 
 $(document).ready( function() {
 
@@ -73,12 +85,16 @@ $(document).ready( function() {
     }
 
     theBook = new AnBook();
-    $('#theAnswer').on('click', getAnAnswer);
+    $('.click_zone').on('click', getAnAnswer);
 
 
-    NET.http_get('/books/' + book + '/book.txt')
+    NET.http_get( Paths.book( book ) )
     .then( function( content ) {
         theBook.decode( content );
         GUI.setTitle( theBook.title || 'No title in this book' );
+        if( theBook.icon )
+            GUI.setBookIcon( Paths.icon( book, theBook.icon ) );
+        else
+            GUI.hideBookIcon();
     });
 });
